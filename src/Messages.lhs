@@ -5,8 +5,8 @@ Miscellaneous messages
 
 > type Message = String
 
-> miscMsg :: Map String Message
-> miscMsg = Map.fromList
+> messages :: Map String Message
+> messages = Map.fromList
 >    [("abra", "Good try, but that is an old worn-out magic word."),
 >     ("abrac",sameAs "abra"),
 >     ("opens",sameAs "abra"),

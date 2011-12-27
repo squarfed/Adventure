@@ -46,4 +46,4 @@ Building the vocabulary
 > vocabulary = Map.fromList $ map (fmap Motion) M.motions  ++
 >                             map (fmap Action) A.actions ++
 >                             map (fmap Object) O.objects ++
->                             map (fmap Message) miscMsg
+>                             map (fmap Message) messages

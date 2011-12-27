@@ -38,7 +38,7 @@ in the same way. (Numerous examples appear below.)
 > import qualified Locations as L
 > import           Locations (Location)
 
-> data Instruction = Instruction Motion Int Location
+> data Instruction = Instruction Motion Int Location [Flag]
 
 > data Flag = Lighted    -- a location that isn’t dark
 >           | Oil        -- presence of oil
@@ -49,6 +49,6 @@ in the same way. (Numerous examples appear below.)
 >           | Twist      -- hint about being lost in a maze
 >           | Dark       -- hint about the dark room
 >           | Witt       -- hint about Witt’s End
-
+>           deriving Eq
 
 

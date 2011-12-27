@@ -23,6 +23,9 @@ cave adventure game, _the_ text game.
 > import qualified Instructions as I
 
 
+
+> main = undefined
+
 The motion words either specify a direction or a simple action or a
 place. Motion words take you from one location to another, when the
 motion is permitted. Here is a list of their possible meanings.

@@ -16,7 +16,7 @@ Objects
 >             | Gold | Diamonds | Silver | Jewels | Coins
 >             | Chest | Eggs | Trident | Vase
 >             | Emerald | Pyramid | Pearl | Rug | Rug_ | Spices | Chain
->             deriving (Eq,Ord)
+>             deriving (Eq,Ord,Enum)
 
 > objects :: [(String, Object)]
 > objects = [("key", Keys),("keys", Keys),

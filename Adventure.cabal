@@ -19,6 +19,8 @@ Executable Adventure
            Other-modules:  Actions
                            Instructions
                            Locations
-                           Objects
                            Motions
+                           Messages
+                           Objects
+                           Vocabulary
            Build-depends: base,containers

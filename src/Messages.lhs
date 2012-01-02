@@ -3,22 +3,35 @@ Miscellaneous messages
 
 > module Messages where
 
+> import Control.Monad.State
 > import qualified Data.Map as M
 > import           Data.Map (Map)
 
 > type Message = String
 
+> type MessageM = State (Message,Map String Message)
+
+> runMessageM :: MessageM a -> Map String Message
+> runMessageM = snd . flip execState ("",M.empty)
+
+> newMess :: String -> Message -> MessageM ()
+> newMess word mess = modify $ \(_,dict) ->  (mess,M.insert word mess dict)
+
+> ditto :: String ->MessageM ()
+> ditto word = do (mess,dict) <- get
+>                 put $ (mess,M.insert word mess dict)
+
 
 > messages :: Map String Message
-> messages = M.fromList
->    [("abra", "Good try, but that is an old worn-out magic word."),
->     ("abrac",sameAs "abra"),
->     ("opens",sameAs "abra"),
->     ("sesam",sameAs "abra"),
->     ("shaze",sameAs "abra"),
->     ("hocus",sameAs "abra"),
->     ("pocus",sameAs "abra"),
->     ("help",
+> messages = runMessageM $ do
+>    newMess "abra" "Good try, but that is an old worn-out magic word."
+>    ditto "abrac"
+>    ditto "opens"
+>    ditto "sesam"
+>    ditto "shaze"
+>    ditto "hocus"
+>    ditto "pocus"
+>    newMess "help"
 >       "I know of places, actions, and things.  Most of my vocabulary\n\
 >       \describes places and is used to move you there.  To move, try words\n\
 >       \like forest, building, downstream, enter, east, west, north, south,\n\
@@ -38,41 +51,41 @@ Miscellaneous messages
 >       \you to the building from anywhere above ground except when lost in the\n\
 >       \forest.  Also, note that cave passages turn a lot, and that leaving a\n\
 >       \room to the north does not guarantee entering the next from the south.\n\
->       \Good luck!"),
->     ("?",sameAs "help"),
->     ("tree",
+>       \Good luck!"
+>    ditto "?"
+>    newMess "tree"
 >       "The trees of the forest are large hardwood oak and maple, with an\n\
 >       \occasional grove of pine or spruce.  There is quite a bit of under-\n\
 >       \growth, largely birch and ash saplings plus nondescript bushes of\n\
 >       \various sorts.  This time of year visibility is quite restricted by\n\
 >       \all the leaves, but travel is quite easy if you detour around the\n\
->       \spruce and berry bushes."),
->     ("trees",sameAs "tree"),
->     ("dig",
+>       \spruce and berry bushes."
+>    ditto "trees"
+>    newMess "dig"
 >       "Digging without a shovel is quite impractical.  Even with a shovel\n\
->       \progress is unlikely."),
->     ("excav",sameAs "dig"),
->     ("lost", "I'm as confused as you are."),
->     ("splash",
+>       \progress is unlikely."
+>    ditto "excav"
+>    newMess "lost" "I'm as confused as you are."
+>    newMess "splash"
 >       "There is a loud explosion and you are suddenly splashed across the\n\
->       \walls of the room."),
->     ("splash2",
+>       \walls of the room."
+>    newMess "splash2"
 >       "There is a loud explosion and a twenty-foot hole appears in the far\n\
 >       \wall, burying the snakes in the rubble.  A river of molten lava pours\n\
->       \in through the hole, destroying everything in its path, including you!"),
->     ("mist", "\
+>       \in through the hole, destroying everything in its path, including you!"
+>    newMess "mist" "\
 >       \Mist is a white vapor, usually water, seen from time to time in\n\
 >       \caverns.  It can be found anywhere but is frequently a sign of a deep\n\
->       \pit leading down to water."),
->     ("fuck", "Watch it!"),
->     ("end",
+>       \pit leading down to water."
+>    newMess "fuck" "Watch it!"
+>    newMess "end"
 >       "There is a loud explosion, and a twenty-foot hole appears in the far\n\
 >       \wall, burying the dwarves in the rubble.  You march through the hole\n\
 >       \and find yourself in the main office, where a cheering band of\n\
->       \friendly elves carry the conquering adventurer off into the sunset."),
->     ("stop",
->       "I don't know the word \"stop\".  Use \"quit\" if you want to give up."),
->     ("info",
+>       \friendly elves carry the conquering adventurer off into the sunset."
+>    newMess "stop"
+>       "I don't know the word \"stop\".  Use \"quit\" if you want to give up."
+>    newMess "info"
 >       "If you want to end your adventure early, say \"quit\".  To get full\n\
 >       \credit for a treasure, you must have left it safely in the building,\n\
 >       \though you get partial credit just for locating it.  You lose points\n\
@@ -90,12 +103,6 @@ Miscellaneous messages
 >       \If I do, I'll warn you in advance how much it will affect your score\n\
 >       \to accept the hints.  Finally, to save paper, you may specify \"brief\",\n\
 >       \which tells me never to repeat the full description of a place\n\
->       \unless you explicitly ask me to."),
->     ("infor",sameAs "info"),
->     ("swim", "I don't know how.")]
->     where
->        sameAs = (messages M.!)
-
-
-
-
+>       \unless you explicitly ask me to."
+>    ditto "infor"
+>    newMess "swim" "I don't know how."

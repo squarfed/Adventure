@@ -3,10 +3,14 @@ Miscellaneous messages
 
 > module Messages where
 
+> import qualified Data.Map as M
+> import           Data.Map (Map)
+
 > type Message = String
 
+
 > messages :: Map String Message
-> messages = Map.fromList
+> messages = M.fromList
 >    [("abra", "Good try, but that is an old worn-out magic word."),
 >     ("abrac",sameAs "abra"),
 >     ("opens",sameAs "abra"),
@@ -90,7 +94,7 @@ Miscellaneous messages
 >     ("infor",sameAs "info"),
 >     ("swim", "I don't know how.")]
 >     where
->        sameAs = (miscMsg Map.!)
+>        sameAs = (messages M.!)
 
 
 

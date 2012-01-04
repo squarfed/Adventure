@@ -8,6 +8,10 @@
 > import           Actions (Action)
 > import           Messages
 
+> import qualified Data.Map as M
+> import           Data.Map (Map)
+> import           Prelude hiding (truncate)
+
 The motion words either specify a direction or a simple action or a
 place. Motion words take you from one location to another, when the
 motion is permitted. Here is a list of their possible meanings.
@@ -36,14 +40,15 @@ Words are truncated to 5 letters
 
 The function to build a table
 
-
 > lookup :: String -> Vocabulary -> Maybe Word
-> lookup word = Map.lookup (truncate word)
+> lookup word = M.lookup (truncate word)
 
 Building the vocabulary
 
 > vocabulary :: Vocabulary
-> vocabulary = Map.fromList $ map (fmap Motion) M.motions  ++
->                             map (fmap Action) A.actions ++
+> vocabulary = M.fromList $ map (fmap Motion) M.motions  ++
+>                             map (fmap Action) actions ++
 >                             map (fmap Object) O.objects ++
 >                             map (fmap Message) messages
+>     where
+>       (actions,_) = A.actions

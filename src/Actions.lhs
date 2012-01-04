@@ -1,7 +1,7 @@
 Actions
 -------
 
-> module Actions where
+> module Actions (Action(..),actions) where
 
 > import Control.Monad.State
 > import Data.Maybe (fromJust)

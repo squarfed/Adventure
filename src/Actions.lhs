@@ -6,6 +6,7 @@ Actions
 > import Control.Monad.State
 > import Data.Maybe (fromJust)
 
+
 > data Action = Abstain | Take | Drop | Open | Close
 >             | On | Off | Wave | Calm | Go | Relax
 >             | Pour | Eat | Drink | Rub | Toss | Wake | Feed
@@ -14,65 +15,101 @@ Actions
 >             | Inventory | Score | Quit
 >             deriving (Eq,Ord,Show)
 
+
 > type ActionDictionary = [(String,Action)]
+
 
 > type MessageMap = [(Action,String)]
 
+
 > type ActionM = State (ActionDictionary,MessageMap)
 
+
+> runActionM ::ActionM a -> (ActionDictionary,MessageMap)
 > runActionM = flip execState ([],[])
+
 
 > newWord word act = modify $ \(m1,m2) -> ((word,act):m1,m2)
 
-> setMsg act msg = modify $ \(m1,m2) -> (m1,(act,msg):m2)
 
+> ditto :: String -> ActionM ()
+> ditto word = do ((_,act):_,_) <- get
+>                 newWord word act
+
+
+> setMsg :: String -> ActionM ()
+> setMsg msg = do (m1,m2) <- get
+>                 let (_,act) = head m1
+>                 put (m1,(act,msg):m2)
+
+
+> getMsg :: Action -> ActionM String
 > getMsg act = get >>= return . (fromJust . lookup act) . snd
+
 
 > actions :: (ActionDictionary,MessageMap)
 > actions = runActionM $ do
->    newWord "take" Take >> newWord "carry" Take >> newWord "keep" Take
->    newWord "catch" Take >> newWord "captu" Take >> newWord "steal" Take
->    newWord "get" Take >> newWord "tote" Take
->    setMsg Take "You are already carrying it!"
->    newWord "drop" Drop >> newWord "relea" Drop >> newWord "free" Drop
->    newWord "disca" Drop >> newWord "dump" Drop
->    setMsg Drop "You aren't carrying it!"
->    newWord "open" Open >> newWord "unloc" Open
->    setMsg Open "I don't know how to lock or unlock such a thing."
->    newWord "close" Close >> newWord "lock" Close
->    setMsg Close =<< getMsg Open
->    newWord "light" On >> newWord "on" On
->    setMsg On "You have no source of light."
->    newWord "extin" Off >> newWord "off" Off
->    setMsg Off =<< getMsg On
->    newWord "wave" Wave >> newWord "shake" Wave >> newWord "swing" Wave
->    setMsg Wave "Nothing happens."
->    newWord "calm" Calm >> newWord "placa" Calm >> newWord "tame" Calm
->    setMsg Calm "I'm game. Would you care to explain how?"
->    newWord "walk" Go >> newWord "run" Go >> newWord "trave" Go
->    newWord "go" Go >> newWord "proce" Go >> newWord "explo" Go
->    newWord "goto" Go >> newWord "follo" Go >> newWord "turn" Go
->    setMsg Go "Where?"
+>    newWord "take" Take >> ditto "carry" >> ditto "keep"
+>    ditto "catch" >> ditto "captu" >> ditto "steal"
+>    ditto "get" >> ditto "tote"
+>    setMsg "You are already carrying it!"
+
+>    newWord "drop" Drop >> ditto "relea" >> ditto "free"
+>    ditto "disca" >> ditto "dump"
+>    setMsg "You aren't carrying it!"
+
+>    newWord "open" Open >> ditto "unloc"
+>    setMsg "I don't know how to lock or unlock such a thing."
+
+>    newWord "close" Close >> ditto "lock"
+>    setMsg =<< getMsg Open
+
+>    newWord "light" On >> ditto "on"
+>    setMsg "You have no source of light."
+
+>    newWord "extin" Off >> ditto "off"
+>    setMsg =<< getMsg On
+
+>    newWord "wave" Wave >> ditto "shake" >> ditto "swing"
+>    setMsg "Nothing happens."
+
+>    newWord "calm" Calm >> ditto "placa" >> ditto "tame"
+>    setMsg "I'm game. Would you care to explain how?"
+
+>    newWord "walk" Go >> ditto "run" >> ditto "trave"
+>    ditto "go" >> ditto "proce" >> ditto "explo"
+>    ditto "goto" >> ditto "follo" >> ditto "turn"
+>    setMsg "Where?"
+
 >    newWord "nothi" Relax
->    setMsg Relax "OK."
+>    setMsg "OK."
+
 >    newWord "pour" Pour
->    setMsg Pour =<< getMsg Drop
->    newWord "eat" Eat >> newWord "devou" Eat
->    setMsg Eat "Don't be ridiculous!"
+>    setMsg =<< getMsg Drop
+
+>    newWord "eat" Eat >> ditto "devou"
+>    setMsg "Don't be ridiculous!"
+
 >    newWord "drink" Drink
->    setMsg Drink
+>    setMsg
 >         "You have taken a drink from the stream. The water tastes strongly of\n\
 >         \minerals, but is not unpleasant. It is extremely cold."
+
 >    newWord "rub" Rub
->    setMsg Rub "Rubbing the electric lamp is not particularly rewarding. Anyway\n\
+>    setMsg "Rubbing the electric lamp is not particularly rewarding. Anyway\n\
 >               \nothing exciting happens."
->    newWord "throw" Toss >> newWord "toss" Toss
->    setMsg Toss "Peculiar. Nothing unexpected happens."
->    newWord "wake" Wake >> newWord "distu" Wake
->    setMsg Wake =<< getMsg Eat
+
+>    newWord "throw" Toss >> ditto "toss"
+>    setMsg "Peculiar. Nothing unexpected happens."
+
+>    newWord "wake" Wake >> ditto "distu"
+>    setMsg =<< getMsg Eat
+
 >    newWord "feed" Feed
->    setMsg Feed "There is nothing here to eat."
+>    setMsg "There is nothing here to eat."
+
 >    newWord "fill" Fill
->    setMsg Fill "You can't fill that."
->    newWord "break" Break >> newWord "smash" Break >> newWord "shatt" Break
->    setMsg Break "It is beyond your power to do that."
+>    setMsg "You can't fill that."
+
+>    newWord "break" Break >> ditto "smash" >> ditto "shatt"
+>    setMsg "It is beyond your power to do that."

@@ -27,7 +27,8 @@ Cave data
   device is a convenient way to provide a variety of features without making
   the program logic any more cluttered than it already is.
 
-> module Locations where
+
+> module Locations (Location(..)) where
 
 > data Location = Inhand | Limbo
 >               | Road | Hill | House | Valley
@@ -65,3 +66,4 @@ Cave data
 >               | Check | Snaked | Thru | Duck | Sewer
 >               | Upnout | Didit
 >               | Ppass | Pdrop | Troll
+>                 deriving (Show,Enum)

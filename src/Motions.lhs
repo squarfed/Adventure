@@ -1,7 +1,8 @@
 Motions
 -------
 
-> module Motions where
+> module Motions (Motion(..),motions) where
+
 
 > data Motion = N | S | E | W | NE | SE | NW | SW | U | D | L | R
 >             | In | Out | Forward | Back

@@ -66,16 +66,16 @@ Actions
 >       (On, "You have no source of light."),
 >       (Off, sameAs On),
 >       (Wave, "Nothing happens."),
->       (Calm, "I'm game. Would you care to explain how?"),
+>       (Calm, "I'm game.  Would you care to explain how?"),
 >       (Go, "Where?"),
 >       (Relax, "OK."),
 >       (Pour, sameAs Drop),
 >       (Eat, "Don't be ridiculous!"),
 >       (Drink,
->         "You have taken a drink from the stream. The water tastes strongly of\n\
+>         "You have taken a drink from the stream.  The water tastes strongly of\n\
 >         \minerals, but is not unpleasant. It is extremely cold."),
 >       (Rub,
->         "Rubbing the electric lamp is not particularly rewarding. Anyway,\n\
+>         "Rubbing the electric lamp is not particularly rewarding.  Anyway,\n\
 >         \nothing exciting happens."),
 >       (Toss, "Peculiar. Nothing unexpected happens."),
 >       (Wake, sameAs Eat),
@@ -89,7 +89,7 @@ Actions
 >       (Feefie,"I don’t know how."),
 >       (Find,
 >          "I can only tell you what you see as you move about and manipulate\n\
->          \things. I cannot tell you where remote things are."),
+>          \things.  I cannot tell you where remote things are."),
 >       (Inventory,sameAs Find),
 >       (Score,"Eh?"),
 >       (Quit,sameAs Score)]

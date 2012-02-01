@@ -16,7 +16,6 @@ The motion words either specify a direction or a simple action or a
 place. Motion words take you from one location to another, when the
 motion is permitted. Here is a list of their possible meanings.
 
-
 > data Word = Motion Motion
 >           | Action Action
 >           | Object Object
@@ -47,8 +46,6 @@ Building the vocabulary
 
 > vocabulary :: Vocabulary
 > vocabulary = M.fromList $ map (fmap Motion) M.motions  ++
->                             map (fmap Action) actions ++
+>                             map (fmap Action) A.actions ++
 >                             map (fmap Object) O.objects ++
 >                             map (fmap Message) messages
->     where
->       (actions,_) = A.actions

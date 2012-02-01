@@ -3,9 +3,8 @@ Actions
 
 > module Actions (Action(..),actions) where
 
-> import Control.Monad.State
-> import Data.Maybe (fromJust)
-
+> import qualified Data.Map as  Map
+> import           Data.Map (Map)
 
 > data Action = Abstain | Take | Drop | Open | Close
 >             | On | Off | Wave | Calm | Go | Relax
@@ -18,98 +17,81 @@ Actions
 
 > type ActionDictionary = [(String,Action)]
 
+> actions :: [(String, Action)]
+> actions = [("take", Take),("carry", Take),("keep", Take),
+>            ("catch", Take),("captu", Take),("steal", Take),
+>            ("get", Take),("tote", Take),
+>            ("drop", Drop),("relea", Drop),("free", Drop),
+>            ("disca", Drop),("dump", Drop),
+>            ("open", Open),("unloc", Open),
+>            ("close", Close),("lock", Close),
+>            ("light", On),("on", On),
+>            ("extin", Off),("off", Off),
+>            ("wave", Wave),("shake", Wave),("swing", Wave),
+>            ("calm", Calm),("placa", Calm),("tame", Calm),
+>            ("walk", Go),("run", Go),("trave", Go),("go", Go),
+>            ("proce", Go),("explo", Go),("goto", Go),("follo", Go),
+>            ("turn", Go),
+>            ("nothi", Relax),
+>            ("pour", Pour),
+>            ("eat", Eat),("devou", Eat),
+>            ("drink", Drink),
+>            ("rub", Rub),
+>            ("throw", Toss),("toss", Toss),
+>            ("wake", Wake),("distu", Wake),
+>            ("feed", Feed),
+>            ("fill", Fill),
+>            ("break", Break),("smash", Break),("shatt", Break),
+>            ("blast", Blast),("deton", Blast),("ignit", Blast),("blowu", Blast),
+>            ("attac", Kill),("kill", Kill),("fight", Kill),
+>            ("hit", Kill),("strik", Kill),("slay", Kill),
+>            ("say", Say),("chant", Say),("sing", Say),("utter", Say),
+>            ("mumbl", Say),
+>            ("read", Read),("perus", Read),
+>            ("fee", Feefie),("fie", Feefie),("foe", Feefie),
+>            ("foo", Feefie),("fum", Feefie),
+>            ("brief", Brief),
+>            ("find", Find),("where", Find),
+>            ("inven", Inventory),
+>            ("score", Score),
+>            ("quit", Quit)]
 
-> type MessageMap = [(Action,String)]
 
-
-> type ActionM = State (ActionDictionary,MessageMap)
-
-
-> runActionM ::ActionM a -> (ActionDictionary,MessageMap)
-> runActionM = flip execState ([],[])
-
-
-> newWord word act = modify $ \(m1,m2) -> ((word,act):m1,m2)
-
-
-> ditto :: String -> ActionM ()
-> ditto word = do ((_,act):_,_) <- get
->                 newWord word act
-
-
-> setMsg :: String -> ActionM ()
-> setMsg msg = do (m1,m2) <- get
->                 let (_,act) = head m1
->                 put (m1,(act,msg):m2)
-
-
-> getMsg :: Action -> ActionM String
-> getMsg act = get >>= return . (fromJust . lookup act) . snd
-
-
-> actions :: (ActionDictionary,MessageMap)
-> actions = runActionM $ do
->    newWord "take" Take >> ditto "carry" >> ditto "keep"
->    ditto "catch" >> ditto "captu" >> ditto "steal"
->    ditto "get" >> ditto "tote"
->    setMsg "You are already carrying it!"
-
->    newWord "drop" Drop >> ditto "relea" >> ditto "free"
->    ditto "disca" >> ditto "dump"
->    setMsg "You aren't carrying it!"
-
->    newWord "open" Open >> ditto "unloc"
->    setMsg "I don't know how to lock or unlock such a thing."
-
->    newWord "close" Close >> ditto "lock"
->    setMsg =<< getMsg Open
-
->    newWord "light" On >> ditto "on"
->    setMsg "You have no source of light."
-
->    newWord "extin" Off >> ditto "off"
->    setMsg =<< getMsg On
-
->    newWord "wave" Wave >> ditto "shake" >> ditto "swing"
->    setMsg "Nothing happens."
-
->    newWord "calm" Calm >> ditto "placa" >> ditto "tame"
->    setMsg "I'm game. Would you care to explain how?"
-
->    newWord "walk" Go >> ditto "run" >> ditto "trave"
->    ditto "go" >> ditto "proce" >> ditto "explo"
->    ditto "goto" >> ditto "follo" >> ditto "turn"
->    setMsg "Where?"
-
->    newWord "nothi" Relax
->    setMsg "OK."
-
->    newWord "pour" Pour
->    setMsg =<< getMsg Drop
-
->    newWord "eat" Eat >> ditto "devou"
->    setMsg "Don't be ridiculous!"
-
->    newWord "drink" Drink
->    setMsg
+> defaultMsg :: Map Action String
+> defaultMsg = Map.fromList
+>      [(Take, "You are already carrying it!"),
+>       (Drop, "You aren't carrying it!"),
+>       (Open, "I don't know how to lock or unlock such a thing."),
+>       (Close, sameAs Open),
+>       (On, "You have no source of light."),
+>       (Off, sameAs On),
+>       (Wave, "Nothing happens."),
+>       (Calm, "I'm game. Would you care to explain how?"),
+>       (Go, "Where?"),
+>       (Relax, "OK."),
+>       (Pour, sameAs Drop),
+>       (Eat, "Don't be ridiculous!"),
+>       (Drink,
 >         "You have taken a drink from the stream. The water tastes strongly of\n\
->         \minerals, but is not unpleasant. It is extremely cold."
-
->    newWord "rub" Rub
->    setMsg "Rubbing the electric lamp is not particularly rewarding. Anyway\n\
->               \nothing exciting happens."
-
->    newWord "throw" Toss >> ditto "toss"
->    setMsg "Peculiar. Nothing unexpected happens."
-
->    newWord "wake" Wake >> ditto "distu"
->    setMsg =<< getMsg Eat
-
->    newWord "feed" Feed
->    setMsg "There is nothing here to eat."
-
->    newWord "fill" Fill
->    setMsg "You can't fill that."
-
->    newWord "break" Break >> ditto "smash" >> ditto "shatt"
->    setMsg "It is beyond your power to do that."
+>         \minerals, but is not unpleasant. It is extremely cold."),
+>       (Rub,
+>         "Rubbing the electric lamp is not particularly rewarding. Anyway,\n\
+>         \nothing exciting happens."),
+>       (Toss, "Peculiar. Nothing unexpected happens."),
+>       (Wake, sameAs Eat),
+>       (Feed, "There is nothing here to eat."),
+>       (Fill, "You can't fill that."),
+>       (Break, "It is beyond your power to do that."),
+>       (Blast,"Blasting requires dynamite."),
+>       (Kill,sameAs Eat),
+>       (Read,"I’m afraid I don’t understand."),
+>       (Brief,"On what?"),
+>       (Feefie,"I don’t know how."),
+>       (Find,
+>          "I can only tell you what you see as you move about and manipulate\n\
+>          \things. I cannot tell you where remote things are."),
+>       (Inventory,sameAs Find),
+>       (Score,"Eh?"),
+>       (Quit,sameAs Score)]
+>     where
+>        sameAs = (defaultMsg Map.!)

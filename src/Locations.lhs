@@ -1,31 +1,31 @@
 Cave data
 ---------
-You might be in any of more than 100 places as you wander about in
-Colossal Cave.
 
-Let's enumerate them now, so that we can build the data structures that
-define the travel restrictions.
+  You might be in any of more than 100 places as you wander about in
+  Colossal Cave.
 
-A special negative value called inhand is the location code for objects
-that you are carrying. But you yourself are always situated in a place that
-has a nonnegative location code.
+  Let's enumerate them now, so that we can build the data structures that
+  define the travel restrictions.
 
-Nonnegative places $\leq$ outside are outside the cave, while places $\geq$
-inside are inside. The upper part of the cave, places $<$ emist , is the
-easiest part to explore. (We will see later that dwarves do not venture
-this close to the surface; they stay $\geq$ emist .)
+  A special negative value called inhand is the location code for objects
+  that you are carrying. But you yourself are always situated in a place that
+  has a nonnegative location code.
 
-Places between inside and dead2 , inclusive, form the main cave; the next
-places, up to and including barr, form the hidden cave on the other side of
-the troll bridge; then neend and swend are a private cave.
+  Nonnegative places $\leq$ outside are outside the cave, while places $\geq$
+  inside are inside. The upper part of the cave, places $<$ emist , is the
+  easiest part to explore. (We will see later that dwarves do not venture
+  this close to the surface; they stay $\geq$ emist .)
 
-The remaining places, $\geq$ crack are dummy locations, not really part of
-the maze. As soon as you arrive at a dummy location, the program
-immediately sends you somewhere else. In fact, the last three dummy
-locations aren't really even locations; they invoke special code. This
-device is a convenient way to provide a variety of features without making
-the program logic any more cluttered than it already is.
+  Places between inside and dead2 , inclusive, form the main cave; the next
+  places, up to and including barr, form the hidden cave on the other side of
+  the troll bridge; then neend and swend are a private cave.
 
+  The remaining places, $\geq$ crack are dummy locations, not really part of
+  the maze. As soon as you arrive at a dummy location, the program
+  immediately sends you somewhere else. In fact, the last three dummy
+  locations aren't really even locations; they invoke special code. This
+  device is a convenient way to provide a variety of features without making
+  the program logic any more cluttered than it already is.
 
 > module Locations where
 

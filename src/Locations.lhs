@@ -42,7 +42,7 @@ Cave data
 >               | Brink | Elong | Wlong
 >               | Diff0 | Diff1 | Diff2 | Diff3 | Diff4
 >               | Diff5 | Diff6 | Diff7 | Diff8 | Diff9 | Diff10
->               | Pony | Cross | Hmk | West | South | Ns
+>               | Pony | Cross | Hmk | West | South | NS
 >               | Y2 | Jumble | Windoe
 >               | Dirty | Clean | Wet | Dusty | Complex
 >               | Shell | Arch | Ragged | Sac | Ante | Witt
@@ -55,7 +55,7 @@ Cave data
 >               | Slab | Abover | Mirror | Res
 >               | Scan1 | Scan2 | Scan3 | Secret
 >               | Wide | Tight | Tall | Boulders
->               | Scorr | Swside
+>               | Scorr | SWside
 >               | Dead0 | Dead1 | Dead2 | Dead3 | Dead4
 >               | Dead5 | Dead6 | Dead7 | Dead8 | Dead9
 >               | Dead10 | Dead11
@@ -66,4 +66,4 @@ Cave data
 >               | Check | Snaked | Thru | Duck | Sewer
 >               | Upnout | Didit
 >               | Ppass | Pdrop | Troll
->                 deriving (Show,Enum)
+>                 deriving (Show,Enum,Eq,Ord)

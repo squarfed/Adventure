@@ -17,6 +17,7 @@ Motions
 >             | Wall | Hall | Room | Floor | Stairs | Steps
 >             | Cobbles | Surface | Dark | Low | Outdoors
 >             | Y2 | XYZZY | Plugh | Plover | Office | Nowhere
+>             | Force -- fake motion see page 41
 >             deriving (Show)
 
 

@@ -1,7 +1,7 @@
 Actions
 -------
 
-> module Actions (Action(..),actions) where
+> module Actions (Action(..),actions,defaultMsg) where
 
 > import qualified Data.Map as  Map
 > import           Data.Map (Map)

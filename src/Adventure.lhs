@@ -1,8 +1,8 @@
 % Colossal cave adventure: a Haskell implementation
 % Federico Squartini
 
-This program is a Haskell translation of Don Knuth/Don Wood's colossal
-cave adventure game, _the_ text game.
+This program is a Haskell translation of Don Wood's colossal cave
+adventure game, _the_ text game.
 
 > module Main where
 

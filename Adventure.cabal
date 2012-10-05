@@ -1,6 +1,6 @@
 Name:                Adventure
 Version:             0.1
-Synopsis:            A haskell version of the classical game Adventure
+Synopsis:            A Haskell version of the classic game "Adventure"
 License:             BSD3
 License-file:        LICENSE
 Author:              Federico Squartini

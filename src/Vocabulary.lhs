@@ -1,4 +1,4 @@
-> module Vocabulary where
+> module Vocabulary (Word(..),lookup) where
 
 > import qualified Motions as M
 > import           Motions (Motion)
@@ -39,8 +39,8 @@ Words are truncated to 5 letters
 
 The function to build a table
 
-> lookup :: String -> Vocabulary -> Maybe Word
-> lookup word = M.lookup (truncate word)
+> look :: String -> Maybe Word
+> look word = M.lookup (truncate word) vocabulary
 
 Building the vocabulary
 

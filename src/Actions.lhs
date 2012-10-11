@@ -1,7 +1,7 @@
 Actions
--------
+=======
 
-> module Actions (Action(..),actions,defaultMsg) where
+> module Actions (Action(..),actionsVoc,defaultMsg) where
 
 > import qualified Data.Map as  Map
 > import           Data.Map (Map)
@@ -17,8 +17,8 @@ Actions
 
 > type ActionDictionary = [(String,Action)]
 
-> actions :: [(String, Action)]
-> actions = [("take", Take),("carry", Take),("keep", Take),
+> actionsVoc :: [(String, Action)]
+> actionsVoc = [("take", Take),("carry", Take),("keep", Take),
 >            ("catch", Take),("captu", Take),("steal", Take),
 >            ("get", Take),("tote", Take),
 >            ("drop", Drop),("relea", Drop),("free", Drop),

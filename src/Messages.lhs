@@ -1,7 +1,7 @@
 Miscellaneous messages
-----------------------
+======================
 
-> module Messages where
+> module Messages (Message,messagesVoc) where
 
 > import Data.List  (lookup)
 > import Data.Maybe (fromJust)
@@ -9,8 +9,8 @@ Miscellaneous messages
 
 > type Message = String
 
-> messages :: [(String,Message)]
-> messages =
+> messagesVoc :: [(String,Message)]
+> messagesVoc =
 >    [("abra", "Good try, but that is an old worn-out magic word."),
 >     ("abrac",sameAs "abra"),
 >     ("opens",sameAs "abra"),
@@ -94,4 +94,6 @@ Miscellaneous messages
 >     ("infor",sameAs "info"),
 >     ("swim", "I don't know how.")]
 >     where
->        sameAs = fromJust . (`lookup` messages)
+>        sameAs = fromJust . (`lookup` messagesVoc)
+
+

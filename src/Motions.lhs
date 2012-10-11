@@ -1,7 +1,7 @@
 Motions
--------
+=======
 
-> module Motions (Motion(..),motions) where
+> module Motions (Motion(..),motionsVoc) where
 
 
 > data Motion = N | S | E | W | NE | SE | NW | SW | U | D | L | R
@@ -27,8 +27,8 @@ Motions
 
 > flatten = concatMap (\(MotionVoc strings motion) -> zip strings (repeat motion))
 
-> motions :: [(String, Motion)]
-> motions = flatten [
+> motionsVoc :: [(String, Motion)]
+> motionsVoc = flatten [
 >     MotionVoc ["n","north"] N,
 >     MotionVoc ["s","south"] S,
 >     MotionVoc ["e","east"] E,

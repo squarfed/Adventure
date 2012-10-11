@@ -1,7 +1,7 @@
 Objects
--------
+=======
 
-> module Objects where
+> module Objects (Object(..),objectsVoc) where
 
 > data Object = Nothing | Keys | Lamp | Grate | Grate_
 >             | Cage | Rod | Rod2 | Treads | Treads_
@@ -18,8 +18,8 @@ Objects
 >             | Emerald | Pyramid | Pearl | Rug | Rug_ | Spices | Chain
 >             deriving (Eq,Ord,Enum,Show)
 
-> objects :: [(String, Object)]
-> objects = [("key", Keys),("keys", Keys),
+> objectsVoc :: [(String, Object)]
+> objectsVoc = [("key", Keys),("keys", Keys),
 >            ("lamp", Lamp),("lante", Lamp),("headl", Lamp),
 >            ("grate", Grate),
 >            ("cage", Cage),

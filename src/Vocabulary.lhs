@@ -1,4 +1,8 @@
-> module Vocabulary (Word(..),lookup) where
+Building the vocabulary
+=======================
+
+
+> module Vocabulary (Word(..),look) where
 
 > import qualified Motions as M
 > import           Motions (Motion)
@@ -21,14 +25,10 @@ motion is permitted. Here is a list of their possible meanings.
 >           | Object Object
 >           | Message Message
 
-
 And here is how they enter our vocabulary.
 
 If I were writing this program, I would allow the word woods, but Don
 apparently didn't want to.
-
-Build the vocabulary
---------------------
 
 > type Vocabulary = Map String Word
 
@@ -45,7 +45,7 @@ The function to build a table
 Building the vocabulary
 
 > vocabulary :: Vocabulary
-> vocabulary = M.fromList $ map (fmap Motion) M.motions  ++
->                             map (fmap Action) A.actions ++
->                             map (fmap Object) O.objects ++
->                             map (fmap Message) messages
+> vocabulary = M.fromList $ map (fmap Motion) M.motionsVoc  ++
+>                             map (fmap Action) A.actionsVoc ++
+>                             map (fmap Object) O.objectsVoc ++
+>                             map (fmap Message) messagesVoc
